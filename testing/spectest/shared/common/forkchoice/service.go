@@ -48,13 +48,14 @@ func startChainService(t testing.TB, st state.BeaconState, block interfaces.Sign
 	depositCache, err := depositcache.New()
 	require.NoError(t, err)
 
+	fc := protoarray.New()
 	opts := append([]blockchain.Option{},
 		blockchain.WithExecutionEngineCaller(engineMock),
 		blockchain.WithFinalizedStateAtStartUp(st),
 		blockchain.WithDatabase(db),
 		blockchain.WithAttestationService(attPool),
-		blockchain.WithForkChoiceStore(protoarray.New()),
-		blockchain.WithStateGen(stategen.New(db)),
+		blockchain.WithForkChoiceStore(fc),
+		blockchain.WithStateGen(stategen.New(db, fc)),
 		blockchain.WithStateNotifier(&mock.MockStateNotifier{}),
 		blockchain.WithAttestationPool(attestations.NewPool()),
 		blockchain.WithDepositCache(depositCache),

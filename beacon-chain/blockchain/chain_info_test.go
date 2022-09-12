@@ -86,7 +86,7 @@ func TestFinalizedCheckpt_GenesisRootOk(t *testing.T) {
 	opts := []Option{
 		WithDatabase(beaconDB),
 		WithForkChoiceStore(fcs),
-		WithStateGen(stategen.New(beaconDB)),
+		WithStateGen(stategen.New(beaconDB, fcs)),
 	}
 	service, err := NewService(ctx, opts...)
 	require.NoError(t, err)
@@ -111,7 +111,7 @@ func TestCurrentJustifiedCheckpt_CanRetrieve(t *testing.T) {
 	opts := []Option{
 		WithDatabase(beaconDB),
 		WithForkChoiceStore(fcs),
-		WithStateGen(stategen.New(beaconDB)),
+		WithStateGen(stategen.New(beaconDB, fcs)),
 	}
 	service, err := NewService(ctx, opts...)
 	require.NoError(t, err)
@@ -138,7 +138,7 @@ func TestHeadRoot_CanRetrieve(t *testing.T) {
 	opts := []Option{
 		WithDatabase(beaconDB),
 		WithForkChoiceStore(fcs),
-		WithStateGen(stategen.New(beaconDB)),
+		WithStateGen(stategen.New(beaconDB, fcs)),
 	}
 	service, err := NewService(ctx, opts...)
 	require.NoError(t, err)
@@ -157,7 +157,7 @@ func TestHeadRoot_UseDB(t *testing.T) {
 	opts := []Option{
 		WithDatabase(beaconDB),
 		WithForkChoiceStore(fcs),
-		WithStateGen(stategen.New(beaconDB)),
+		WithStateGen(stategen.New(beaconDB, fcs)),
 	}
 	service, err := NewService(ctx, opts...)
 	require.NoError(t, err)

@@ -19,6 +19,7 @@ import (
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/core/transition"
 	dbutil "github.com/prysmaticlabs/prysm/v3/beacon-chain/db/testing"
 	mockExecution "github.com/prysmaticlabs/prysm/v3/beacon-chain/execution/testing"
+	doublylinkedtree "github.com/prysmaticlabs/prysm/v3/beacon-chain/forkchoice/doubly-linked-tree"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/forkchoice/protoarray"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/operations/attestations"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/operations/attestations/mock"
@@ -679,7 +680,7 @@ func TestProduceBlockV2(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 		}
 
 		proposerSlashings := make([]*ethpbalpha.ProposerSlashing, params.BeaconConfig().MaxProposerSlashings)
@@ -783,7 +784,7 @@ func TestProduceBlockV2(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool: synccommittee.NewStore(),
 		}
 
@@ -932,7 +933,7 @@ func TestProduceBlockV2(t *testing.T) {
 			AttPool:                attestations.NewPool(),
 			SlashingsPool:          slashings.NewPool(),
 			ExitPool:               voluntaryexits.NewPool(),
-			StateGen:               stategen.New(db),
+			StateGen:               stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool:      synccommittee.NewStore(),
 			ProposerSlotIndexCache: cache.NewProposerPayloadIDsCache(),
 		}
@@ -1056,7 +1057,7 @@ func TestProduceBlockV2SSZ(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 		}
 
 		proposerSlashings := make([]*ethpbalpha.ProposerSlashing, 1)
@@ -1217,7 +1218,7 @@ func TestProduceBlockV2SSZ(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool: synccommittee.NewStore(),
 		}
 
@@ -1421,7 +1422,7 @@ func TestProduceBlockV2SSZ(t *testing.T) {
 			AttPool:                attestations.NewPool(),
 			SlashingsPool:          slashings.NewPool(),
 			ExitPool:               voluntaryexits.NewPool(),
-			StateGen:               stategen.New(db),
+			StateGen:               stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool:      synccommittee.NewStore(),
 			ProposerSlotIndexCache: cache.NewProposerPayloadIDsCache(),
 		}
@@ -1640,7 +1641,7 @@ func TestProduceBlindedBlock(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 		}
 
 		proposerSlashings := make([]*ethpbalpha.ProposerSlashing, params.BeaconConfig().MaxProposerSlashings)
@@ -1744,7 +1745,7 @@ func TestProduceBlindedBlock(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool: synccommittee.NewStore(),
 		}
 
@@ -1937,7 +1938,7 @@ func TestProduceBlindedBlock(t *testing.T) {
 			AttPool:                attestations.NewPool(),
 			SlashingsPool:          slashings.NewPool(),
 			ExitPool:               voluntaryexits.NewPool(),
-			StateGen:               stategen.New(db),
+			StateGen:               stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool:      synccommittee.NewStore(),
 			ProposerSlotIndexCache: cache.NewProposerPayloadIDsCache(),
 			BlockBuilder: &builderTest.MockBuilderService{
@@ -2072,7 +2073,7 @@ func TestProduceBlindedBlockSSZ(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 		}
 
 		proposerSlashings := make([]*ethpbalpha.ProposerSlashing, 1)
@@ -2233,7 +2234,7 @@ func TestProduceBlindedBlockSSZ(t *testing.T) {
 			AttPool:           attestations.NewPool(),
 			SlashingsPool:     slashings.NewPool(),
 			ExitPool:          voluntaryexits.NewPool(),
-			StateGen:          stategen.New(db),
+			StateGen:          stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool: synccommittee.NewStore(),
 		}
 
@@ -2437,7 +2438,7 @@ func TestProduceBlindedBlockSSZ(t *testing.T) {
 			AttPool:                attestations.NewPool(),
 			SlashingsPool:          slashings.NewPool(),
 			ExitPool:               voluntaryexits.NewPool(),
-			StateGen:               stategen.New(db),
+			StateGen:               stategen.New(db, doublylinkedtree.New()),
 			SyncCommitteePool:      synccommittee.NewStore(),
 			ProposerSlotIndexCache: cache.NewProposerPayloadIDsCache(),
 		}

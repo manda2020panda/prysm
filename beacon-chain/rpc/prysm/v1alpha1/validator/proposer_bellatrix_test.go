@@ -18,6 +18,7 @@ import (
 	prysmtime "github.com/prysmaticlabs/prysm/v3/beacon-chain/core/time"
 	dbTest "github.com/prysmaticlabs/prysm/v3/beacon-chain/db/testing"
 	mockExecution "github.com/prysmaticlabs/prysm/v3/beacon-chain/execution/testing"
+	doublylinkedtree "github.com/prysmaticlabs/prysm/v3/beacon-chain/forkchoice/doubly-linked-tree"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/forkchoice/protoarray"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/operations/attestations"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/operations/slashings"
@@ -58,7 +59,7 @@ func TestServer_buildHeaderBlock(t *testing.T) {
 
 	proposerServer := &Server{
 		BeaconDB: db,
-		StateGen: stategen.New(db),
+		StateGen: stategen.New(db, doublylinkedtree.New()),
 	}
 	b, err := util.GenerateFullBlockAltair(copiedState, keys, util.DefaultBlockGenConfig(), 1)
 	require.NoError(t, err)
@@ -69,7 +70,7 @@ func TestServer_buildHeaderBlock(t *testing.T) {
 	b1, err := util.GenerateFullBlockAltair(copiedState, keys, util.DefaultBlockGenConfig(), 2)
 	require.NoError(t, err)
 
-	vs := &Server{StateGen: stategen.New(db), BeaconDB: db}
+	vs := &Server{StateGen: stategen.New(db, doublylinkedtree.New()), BeaconDB: db}
 	h := &v1.ExecutionPayloadHeader{
 		BlockNumber:      123,
 		GasLimit:         456,
@@ -489,7 +490,7 @@ func TestServer_getAndBuildHeaderBlock(t *testing.T) {
 		Timestamp:        ts,
 	}
 
-	vs.StateGen = stategen.New(vs.BeaconDB)
+	vs.StateGen = stategen.New(vs.BeaconDB, doublylinkedtree.New())
 	vs.GenesisFetcher = &blockchainTest.ChainService{}
 	vs.ForkFetcher = &blockchainTest.ChainService{Fork: &ethpb.Fork{}}
 
@@ -608,7 +609,7 @@ func TestServer_GetBellatrixBeaconBlock_HappyCase(t *testing.T) {
 		AttPool:           attestations.NewPool(),
 		SlashingsPool:     slashings.NewPool(),
 		ExitPool:          voluntaryexits.NewPool(),
-		StateGen:          stategen.New(db),
+		StateGen:          stategen.New(db, doublylinkedtree.New()),
 		SyncCommitteePool: synccommittee.NewStore(),
 		ExecutionEngineCaller: &mockExecution.EngineClient{
 			PayloadIDBytes:   &v1.PayloadIDBytes{1},
@@ -739,7 +740,7 @@ func TestServer_GetBellatrixBeaconBlock_BuilderCase(t *testing.T) {
 		AttPool:             attestations.NewPool(),
 		SlashingsPool:       slashings.NewPool(),
 		ExitPool:            voluntaryexits.NewPool(),
-		StateGen:            stategen.New(db),
+		StateGen:            stategen.New(db, doublylinkedtree.New()),
 		SyncCommitteePool:   synccommittee.NewStore(),
 		ExecutionEngineCaller: &mockExecution.EngineClient{
 			PayloadIDBytes:   &v1.PayloadIDBytes{1},

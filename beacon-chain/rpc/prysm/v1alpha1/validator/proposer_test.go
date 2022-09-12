@@ -20,6 +20,7 @@ import (
 	coretime "github.com/prysmaticlabs/prysm/v3/beacon-chain/core/time"
 	dbutil "github.com/prysmaticlabs/prysm/v3/beacon-chain/db/testing"
 	mockExecution "github.com/prysmaticlabs/prysm/v3/beacon-chain/execution/testing"
+	doublylinkedtree "github.com/prysmaticlabs/prysm/v3/beacon-chain/forkchoice/doubly-linked-tree"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/operations/attestations"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/operations/slashings"
 	"github.com/prysmaticlabs/prysm/v3/beacon-chain/operations/synccommittee"
@@ -137,7 +138,7 @@ func TestProposer_ComputeStateRoot_OK(t *testing.T) {
 		ChainStartFetcher: &mockExecution.Chain{},
 		Eth1InfoFetcher:   &mockExecution.Chain{},
 		Eth1BlockFetcher:  &mockExecution.Chain{},
-		StateGen:          stategen.New(db),
+		StateGen:          stategen.New(db, doublylinkedtree.New()),
 	}
 	req := util.NewBeaconBlock()
 	req.Block.ProposerIndex = 21
@@ -1928,7 +1929,7 @@ func TestProposer_GetBeaconBlock_PreForkEpoch(t *testing.T) {
 		AttPool:           attestations.NewPool(),
 		SlashingsPool:     slashings.NewPool(),
 		ExitPool:          voluntaryexits.NewPool(),
-		StateGen:          stategen.New(db),
+		StateGen:          stategen.New(db, doublylinkedtree.New()),
 		SyncCommitteePool: synccommittee.NewStore(),
 	}
 
@@ -2039,7 +2040,7 @@ func TestProposer_GetBeaconBlock_PostForkEpoch(t *testing.T) {
 		AttPool:           attestations.NewPool(),
 		SlashingsPool:     slashings.NewPool(),
 		ExitPool:          voluntaryexits.NewPool(),
-		StateGen:          stategen.New(db),
+		StateGen:          stategen.New(db, doublylinkedtree.New()),
 		SyncCommitteePool: synccommittee.NewStore(),
 	}
 
@@ -2191,7 +2192,7 @@ func TestProposer_GetBeaconBlock_BellatrixEpoch(t *testing.T) {
 		AttPool:           attestations.NewPool(),
 		SlashingsPool:     slashings.NewPool(),
 		ExitPool:          voluntaryexits.NewPool(),
-		StateGen:          stategen.New(db),
+		StateGen:          stategen.New(db, doublylinkedtree.New()),
 		SyncCommitteePool: synccommittee.NewStore(),
 		ExecutionEngineCaller: &mockExecution.EngineClient{
 			PayloadIDBytes:   &enginev1.PayloadIDBytes{1},

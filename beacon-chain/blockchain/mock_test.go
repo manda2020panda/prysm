@@ -16,7 +16,7 @@ func testServiceOptsWithDB(t *testing.T) []Option {
 	fcs := protoarray.New()
 	return []Option{
 		WithDatabase(beaconDB),
-		WithStateGen(stategen.New(beaconDB)),
+		WithStateGen(stategen.New(beaconDB, fcs)),
 		WithForkChoiceStore(fcs),
 	}
 }
