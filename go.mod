@@ -94,7 +94,7 @@ require (
 	google.golang.org/protobuf v1.28.0
 	gopkg.in/d4l3k/messagediff.v1 v1.2.1
 	gopkg.in/yaml.v2 v2.4.0
-	k8s.io/client-go v0.18.3
+	k8s.io/client-go v0.20.0
 )
 
 require (
@@ -233,10 +233,9 @@ require (
 	gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/apimachinery v0.18.3 // indirect
-	k8s.io/klog v1.0.0 // indirect
+	k8s.io/apimachinery v0.20.0 // indirect
 	lukechampine.com/blake3 v1.1.7 // indirect
-	sigs.k8s.io/structured-merge-diff/v3 v3.0.0 // indirect
+	sigs.k8s.io/structured-merge-diff/v4 v4.0.2 // indirect
 	sigs.k8s.io/yaml v1.2.0 // indirect
 )
 
@@ -255,8 +254,8 @@ require (
 	golang.org/x/sys v0.0.0-20220702020025-31831981b65f // indirect
 	google.golang.org/api v0.34.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	k8s.io/klog/v2 v2.3.0 // indirect
-	k8s.io/utils v0.0.0-20200520001619-278ece378a50 // indirect
+	k8s.io/klog/v2 v2.4.0 // indirect
+	k8s.io/utils v0.0.0-20201110183641-67b214c5f920 // indirect
 )
 
 replace github.com/json-iterator/go => github.com/prestonvanloon/go v1.1.7-0.20190722034630-4f2e55fcf87b
